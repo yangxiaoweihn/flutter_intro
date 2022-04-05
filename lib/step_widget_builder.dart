@@ -202,18 +202,41 @@ class StepWidgetBuilder {
       );
 
       return Stack(
+        // alignment: Alignment.topCenter,
         children: [
           Positioned(
             child: SizedBox(
-              width: position['width'],
+            //   // width: position['width'],
+              width: stepWidgetParams.screenSize.width,
               child: widgetBuilder(stepWidgetParams),
             ),
-            left: position['left'],
+            // left: position['left'],
             top: position['top'],
-            bottom: position['bottom'],
-            right: position['right'],
+            // bottom: position['bottom'],
+            // right: position['right'],
           ),
         ],
+      );
+    };
+  }
+
+  static Widget Function(StepWidgetParams params) useCustomTheme({
+    required Widget Function(StepWidgetParams params) widgetBuilder,
+  }) {
+    return (StepWidgetParams stepWidgetParams) {
+      Offset offset = stepWidgetParams.offset!;
+
+      Map position = _smartGetPosition(
+        screenSize: stepWidgetParams.screenSize,
+        size: stepWidgetParams.size,
+        offset: offset,
+      );
+
+      return Container(
+        child: widgetBuilder(stepWidgetParams),
+        margin: EdgeInsets.only(
+          top: position['top'],
+        ),
       );
     };
   }
